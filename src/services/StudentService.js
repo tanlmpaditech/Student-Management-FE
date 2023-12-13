@@ -7,11 +7,14 @@ const fetchAllStudents = async () => {
 
 const postCreateStudent = async (studentId, fullName, email, address, phoneNumber, gender) => {
     return await axios.post('/create-student', {studentId, fullName, email, address, phoneNumber, gender})
-    // return {studentId, fullName, email, address, phoneNumber, gender}
 }
 
-// const postCreateStudent = (name, job) => {
-//     return axios.post("/students", {name, job});
-// }
+const putUpdateStudent = async (id, studentId, fullName, email, address, phoneNumber, gender) => {
+    return await axios.put('/edit-student', {id, studentId, fullName, email, address, phoneNumber, gender});
+}
 
-export {fetchAllStudents, postCreateStudent};
+const deleteStudent = async (id) => {
+    return await axios.delete('/delete-student', {id});
+}
+    
+export {fetchAllStudents, postCreateStudent, putUpdateStudent, deleteStudent};

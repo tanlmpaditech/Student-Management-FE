@@ -1,12 +1,13 @@
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-import { postCreateStudent } from '../services/StudentService'
+import {putUpdateStudent} from '../services/StudentService'
 
-const ModalAddNew = (props) => {
-    const { show, handleClose, handleUpdateTable } = props;
+const ModalEdit = (props) => {
+    const {show, handleClose, dataStudentEdited} = props;
+    const [id, setId] = useState('');
     const [studentId, setStudentId] = useState('');
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,34 +15,39 @@ const ModalAddNew = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [gender, setGender] = useState('');
 
-    // const handleUpdateTable = (student) => {
-    //     setListStudents([student, ...listStudents]);
-    // }
+    useEffect(() => {
+        if(show) {
+            setId(dataStudentEdited.id);
+            setStudentId(dataStudentEdited.studentId);
+            setFullName(dataStudentEdited.fullName);
+            setEmail(dataStudentEdited.email);
+            setAddress(dataStudentEdited.address);
+            setPhoneNumber(dataStudentEdited.phoneNumber);
+            setGender(dataStudentEdited.gender);
+        }
+    }, [dataStudentEdited])
 
-    const handleSaveNewStudent = async () => {
-        let res = await postCreateStudent(studentId, fullName, email, address, phoneNumber, gender);
+    const handleEdit = async () => {
+        let res = await putUpdateStudent(id, studentId, fullName, email, address, phoneNumber, gender);
         console.log(res.data);
         if(res.data) {
+            toast.success('Edit successfully')
             handleClose();
-            setStudentId('');
-            setFullName('');
-            setEmail('');
-            setAddress('');
-            setPhoneNumber('');
-            toast.success('Create a new student successful');
         } else {
-            toast.error('Failed to create student');
+            toast.error('Failed to edit student');
         }
     }
+
     return (
         <div>
             <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
                 <Modal.Header closeButton>
-                <Modal.Title>Add new student</Modal.Title>
+                <Modal.Title>Edit student</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div>
                         <form>
+                        
                             <div className="form-group">
                                 <label className='studentId'>Student ID</label>
                                 <input type="text" className="form-control" value={studentId} onChange={(e) => setStudentId(e.target.value)}/>
@@ -64,7 +70,7 @@ const ModalAddNew = (props) => {
                             </div>
                             <label className='gender'>Gender</label>
                             <select className="form-control" onClick={(e) => setGender(e.target.value)}>
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" defaultValue disabled hidden>Choose here</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="others">Others</option>
@@ -76,8 +82,8 @@ const ModalAddNew = (props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={() => handleSaveNewStudent()}>
-                    Save
+                <Button variant="primary" onClick={() => handleEdit()}>
+                    Save Changes
                 </Button>
                 </Modal.Footer>
             </Modal>
@@ -86,4 +92,4 @@ const ModalAddNew = (props) => {
 
 }
 
-export default ModalAddNew;
+export default ModalEdit;
