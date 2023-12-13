@@ -16,15 +16,13 @@ const TableStudents = () => {
 
     const getStudents = async () => {
         let res = await fetchAllStudents();
-        // console.log(res.data.data);
-        // if(res.data.data) {
-        //     console.log(res.data.total);
-        //     setListStudents(res.data.data);
-        //     setTotalStudents(res.total);
-        //     setTotalPages(res.data.total_pages);
-        // }
-        setListStudents(res);
-        console.log(res);
+        console.log(res.data);
+        if(res.data) {
+            console.log(res.total);
+            setListStudents(res.data);
+            setTotalStudents(res.total);
+        }
+        // console.log(res);
     }
 
     const handlePageClick = (event) => {
@@ -33,11 +31,11 @@ const TableStudents = () => {
 
 
     return (
+        
         <div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                    <th>ID</th>
                     <th>Student ID</th>
                     <th>Full Name</th>
                     <th>Email</th>
@@ -51,7 +49,6 @@ const TableStudents = () => {
                         listStudents.map((item, index) => {
                             return (
                                 <tr key={`user-${index}`}>
-                                    <td>{item.id}</td>
                                     <td>{item.studentId}</td>
                                     <td>{item.fullName}</td>
                                     <td>{item.email}</td>

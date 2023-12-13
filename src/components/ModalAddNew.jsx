@@ -16,8 +16,8 @@ const ModalAddNew = (props) => {
 
     const handleSaveNewStudent = async () => {
         let res = await postCreateStudent(studentId, fullName, email, address, phoneNumber, gender);
-        console.log(res);
-        if(res && res.id) {
+        console.log(res.data);
+        if(res.data) {
             handleClose();
             setStudentId('');
             setFullName('');
@@ -62,7 +62,7 @@ const ModalAddNew = (props) => {
                             </div>
                             <label className='gender'>Gender</label>
                             <select className="form-control" onClick={(e) => setGender(e.target.value)}>
-                                <option defaultValue value="male">Male</option>
+                                <option defaultValue="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="others">Others</option>
                             </select>

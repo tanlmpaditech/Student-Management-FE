@@ -22,7 +22,6 @@ function App() {
     <div className='app-container'>
       <Header/>
       <Container>
-          {/* <Button /> */}
           <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <span><b>List Students: </b></span>
             <button className='btn btn-success' onClick={() => setIsShowModalAddNew(true)}>Add new student</button>
