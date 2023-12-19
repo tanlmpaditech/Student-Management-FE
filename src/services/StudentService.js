@@ -14,7 +14,8 @@ const putUpdateStudent = async (id, studentId, fullName, email, address, phoneNu
 }
 
 const deleteStudent = async (id) => {
-    return await axios.delete('/delete-student', {id});
+    console.log(id)
+    return await axios.delete('/delete-student', { data: { id } });
 }
     
 export {fetchAllStudents, postCreateStudent, putUpdateStudent, deleteStudent};

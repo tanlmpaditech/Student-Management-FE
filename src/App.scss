@@ -11,3 +11,88 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.app-container {
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    .title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      padding-top: 30px;
+    }
+
+    .text {
+      font-weight: 600;
+      padding-bottom: 3px;
+    }
+
+    input {
+      padding: 8px 5px;
+      outline: none;
+      border: none;
+      margin-bottom: 7px;
+      background-color: rgba(22, 24, 35, 0.06);
+      border-radius: 3px;
+      width: 100%;
+
+      &:hover {
+        background-color: #dedede;
+        // border: 1px solid #dedede;
+      }
+    }
+
+    .input-email {
+      position: relative;
+
+      .hidePassword {
+        cursor: pointer;
+        position: absolute;
+        top: 13px;
+        right: 10px;
+      }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 3px;
+      outline: none;
+      border: none;
+      cursor: not-allowed;
+
+      &.active {
+        background-color: rgb(254, 44, 85);
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .spinner {
+        animation: spin infinite 2s linear;
+
+        /*You can increase or decrease the timer (5s) to 
+      increase or decrease the speed of the spinner*/
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
+
+    .back {
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+  }
+
+}

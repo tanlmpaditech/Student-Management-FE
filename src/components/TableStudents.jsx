@@ -10,7 +10,6 @@ import ModalDelete from './ModalDelete';
 
 const TableStudents = () => {
     const [listStudents, setListStudents] = useState([]);
-    // const [totalStudents, setTotalStudents] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
     const [isShowModalAddNewStudents, setIsShowModalAddNewStudents] = useState(false);
@@ -18,12 +17,7 @@ const TableStudents = () => {
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
     const [dataStudentEdited, setDataStudentEdited] = useState({});
     const [id, setId] = useState('');
-    // const [dataStudentDelete, setDataStudentDelete] = useState({});
-
-    // const [student, setStudent] = useState({})
-    // const handleUpdateTable = (student) => {
-    //     setListStudents([student, ...listStudents]);
-    // }
+   
 
     useEffect(() => {
         getStudents()
@@ -60,6 +54,10 @@ const TableStudents = () => {
     return (
         
         <div>
+            <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <span><b>List Students: </b></span>
+                <button className='btn btn-success' onClick={() => setIsShowModalAddNewStudents(true)}>Add new student</button>
+            </div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -128,7 +126,6 @@ const TableStudents = () => {
                 show={isShowModalDelete}
                 handleClose={handleClose}
                 id={id}
-                // handleUpdateTable = {handleUpdateTable}
             />
         </div>
     );

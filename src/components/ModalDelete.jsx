@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
@@ -8,13 +8,8 @@ import { deleteStudent } from '../services/StudentService';
 
 const ModalDelete = (props) => {
     const { show, handleClose, id } = props;
-    // const [id, setId] = useState('');
-    // const [id, setId] = useState('');
-    // console.log(_id);
     const handleDetele = async () => {
         let res = await deleteStudent(id);
-        console.log("id: ", id);
-        console.log(res.data);
         if(id) {
             toast.success('Delete successfully')
             handleClose();

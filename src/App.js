@@ -1,49 +1,37 @@
 import Container from 'react-bootstrap/Container';
-import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Context } from './configs/Context';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { useNavigate } from 'react-router';
 
 import Header from './components/Header';
-// import Button from './components/Button';
-import TableStudents from './components/TableStudents';
-
+import AppRoutes from './routes/AppRoute';
 import './App.scss';
-import ModalAddNew from './components/ModalAddNew';
-
 
 
 function App() {
-  const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
-  const handleClose = () => {
-      setIsShowModalAddNew(false);
-  }
+  const navigate = useNavigate()
+  const [account, setAccount] = useState({});
+    useEffect(() => {
+        let session = sessionStorage.getItem('account');
+        // console.log(JSON.parse(session));
+        if(session) {
+          setAccount(JSON.parse(session));
+          navigate('/')
+        } else {
+          navigate("/login");
+        }
+    }, []);
+
   return (
     <div className='app-container'>
-      <Header/>
       <Container>
-          <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            <span><b>List Students: </b></span>
-            <button className='btn btn-success' onClick={() => setIsShowModalAddNew(true)}>Add new student</button>
-          </div>
-          <TableStudents />
+      {account && !_.isEmpty(account) && account.isAuthenticated && <Header/>}
+      {/* <Header /> */}
+          <AppRoutes />
       </Container>
-      <ModalAddNew 
-        show = {isShowModalAddNew}
-        handleClose = {handleClose}
-      />
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        /> */}
+      
       <ToastContainer />
     </div>
   );
