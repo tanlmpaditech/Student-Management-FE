@@ -28,7 +28,6 @@ function App() {
     <div className='app-container'>
       <Container>
       {account && !_.isEmpty(account) && account.isAuthenticated && <Header/>}
-      {/* <Header /> */}
           <AppRoutes />
       </Container>
       

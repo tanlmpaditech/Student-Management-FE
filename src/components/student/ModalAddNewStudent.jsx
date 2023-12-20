@@ -3,9 +3,9 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-import { postCreateStudent } from '../services/StudentService'
+import { postCreateStudent } from '../../services/StudentService'
 
-const ModalAddNew = (props) => {
+const ModalAddNewStudent = (props) => {
     const { show, handleClose, handleUpdateTable } = props;
     const [studentId, setStudentId] = useState('');
     const [fullName, setFullName] = useState('');
@@ -86,4 +86,4 @@ const ModalAddNew = (props) => {
 
 }
 
-export default ModalAddNew;
+export default ModalAddNewStudent;

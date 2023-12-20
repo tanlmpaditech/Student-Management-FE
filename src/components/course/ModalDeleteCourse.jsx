@@ -3,18 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-import { deleteStudent } from '../services/StudentService';
+import { deleteCourse } from '../../services/CourseService';
 
 
 const ModalDelete = (props) => {
     const { show, handleClose, id } = props;
     const handleDetele = async () => {
-        let res = await deleteStudent(id);
+        let res = await deleteCourse(id);
         if(id) {
             toast.success('Delete successfully')
             handleClose();
         } else {
-            toast.error('Failed to delete student');
+            toast.error('Failed to delete course');
         }
     }
     return (

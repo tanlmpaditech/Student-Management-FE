@@ -1,42 +1,43 @@
-
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
+import { useNavigate } from 'react-router';
 
-import {fetchAllStudents} from '../services/StudentService';
-import ModalAddNew from './ModalAddNew';
-import ModalEdit from './ModalEdit';
-import ModalDelete from './ModalDelete';
+import {fetchAllCourses} from '../../services/CourseService';
+import ModalAddNewCourse from './ModalAddNewCourse';
+// import ModalEditStudent from './ModalEditStudent';
+import ModalDeleteCourse from './ModalDeleteCourse';
 
-const TableStudents = () => {
-    const [listStudents, setListStudents] = useState([]);
+const TableCourses = () => {
+    const [listCourses, setListCourses] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
-    const [isShowModalAddNewStudents, setIsShowModalAddNewStudents] = useState(false);
+    const [isShowModalAddNewCourse, setIsShowModalAddNewCourse] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
     const [dataStudentEdited, setDataStudentEdited] = useState({});
     const [id, setId] = useState('');
    
-
+    const navigate = useNavigate();
     useEffect(() => {
-        getStudents()
+        getCourses()
     }, [])
 
-    const getStudents = async () => {
-        let res = await fetchAllStudents();
+    const getCourses = async () => {
+        let res = await fetchAllCourses();
         if(res.data) {
-            setListStudents(res.data);
+            setListCourses(res.data);
         }
     }
 
     const handlePageClick = (event) => {
-        getStudents(+event.selected + 1)
+        getCourses(+event.selected + 1)
     };
 
-    const handleEdit = (student) => {
-        setDataStudentEdited(student);
-        setIsShowModalEdit(true);
+    const handleEdit = (course) => {
+        // setDataStudentEdited(student);
+        // setIsShowModalEdit(true);
+        
     }   
     
     const handleDelete = (_id) => {
@@ -45,9 +46,13 @@ const TableStudents = () => {
     }
 
     const handleClose = () => {
-        setIsShowModalEdit(false);
-        setIsShowModalAddNewStudents(false);
+        // setIsShowModalEdit(false);
+        setIsShowModalAddNewCourse(false);
         setIsShowModalDelete(false);
+    }
+
+    const addStudentToCourse = (courseId) => {
+        navigate(`/course/${courseId}`)
     }
     
 
@@ -55,36 +60,32 @@ const TableStudents = () => {
         
         <div>
             <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <span><b>List Students: </b></span>
-                <button className='btn btn-success' onClick={() => setIsShowModalAddNewStudents(true)}>Add new student</button>
+                <span><b>Courses: </b></span>
+                <button className='btn btn-success' onClick={() => setIsShowModalAddNewCourse(true)}>Add new course</button>
             </div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                    <th>Student ID</th>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Address</th>    
-                    <th>Phone Number</th>
-                    <th>Gender</th>
-                    <th>Actions</th>
+                    <th>Course ID</th>
+                    <th>Course name</th>
+                    <th>Teacher</th>
+                    <th>Time</th>
+                    {/* <th>Actions</th> */}
                     </tr>
                 </thead>
                 <tbody>
-                    {listStudents && listStudents.length > 0 && 
-                        listStudents.map((item, index) => {
+                    {listCourses && listCourses.length > 0 && 
+                        listCourses.map((item, index) => {
                             return (
-                                <tr key={`user-${index}`}>
-                                    <td>{item.studentId}</td>
-                                    <td>{item.fullName}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.address}</td>
-                                    <td>{item.phoneNumber}</td>
-                                    <td>{item.gender}</td>
-                                    <td>
+                                <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => addStudentToCourse(item.courseId)}>
+                                    <td>{item.courseId}</td>
+                                    <td>{item.courseName}</td>
+                                    <td>{item.teacherName}</td>
+                                    <td>{item.time}</td>
+                                    {/* <td>
                                         <button className='btn btn-warning' onClick={() => handleEdit(item)}>Edit</button>
                                         <button className='btn btn-danger mx-4' onClick={() => handleDelete(item.id)}>Delete</button>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             )
                         })
@@ -112,17 +113,17 @@ const TableStudents = () => {
                 activeClassName="active"
                 renderOnZeroPageCount={null}
             />
-            <ModalAddNew
-                show={isShowModalAddNewStudents}
+            <ModalAddNewCourse
+                show={isShowModalAddNewCourse}
                 handleClose={handleClose}
             />
-            <ModalEdit
+            {/* <ModalEdit
                 show={isShowModalEdit}
                 handleClose={handleClose}
                 dataStudentEdited={dataStudentEdited}
                 handleEdit = {handleEdit}
-            />
-            <ModalDelete
+            /> */}
+            <ModalDeleteCourse
                 show={isShowModalDelete}
                 handleClose={handleClose}
                 id={id}
@@ -131,4 +132,4 @@ const TableStudents = () => {
     );
 }
 
-export default TableStudents;
+export default TableCourses;

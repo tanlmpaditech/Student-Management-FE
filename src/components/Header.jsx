@@ -22,12 +22,13 @@ const Header = () => {
         <div>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="/">Student-Management</Navbar.Brand>
+                    {/* <Navbar.Brand href="/">Student-Management</Navbar.Brand> */}
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" activeKey={location.pathname}>
                         <NavLink className="nav-link" to='/'>Home</NavLink>
                         <NavLink className="nav-link" to='/students'>Manage students</NavLink>
+                        <NavLink className="nav-link" to='/courses'>Courses</NavLink>
                     </Nav>
                     <Nav>
                         {/* <NavDropdown title="Settings" id="basic-nav-dropdown">

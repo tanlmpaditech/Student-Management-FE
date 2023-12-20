@@ -1,7 +1,7 @@
 import axios from "./customize-axios";
 
 const fetchAllStudents = async () => {
-    const data =  await axios.get('students');
+    const data =  await axios.get('/students');
     return data;
 }   
 
@@ -14,7 +14,7 @@ const putUpdateStudent = async (id, studentId, fullName, email, address, phoneNu
 }
 
 const deleteStudent = async (id) => {
-    console.log(id)
+    // console.log(id)
     return await axios.delete('/delete-student', { data: { id } });
 }
     

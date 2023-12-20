@@ -1,5 +1,5 @@
 // import { useState } from "react"
-import ModalAddNew from "./ModalAddNew";
+import ModalAddNewStudent from "./student/ModalAddNewStudent";
 
 
 const Button = () => {
@@ -7,7 +7,7 @@ const Button = () => {
     return (
         <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <span><b>List Students:</b> </span>
-            <button className='btn btn-success' onClick={() => ModalAddNew()}>Add new student</button>
+            <button className='btn btn-success' onClick={() => ModalAddNewStudent()}>Add new student</button>
         </div>
     )
 }

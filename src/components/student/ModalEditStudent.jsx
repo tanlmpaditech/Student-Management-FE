@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-import {putUpdateStudent} from '../services/StudentService'
+import {putUpdateStudent} from '../../services/StudentService'
 
-const ModalEdit = (props) => {
+const ModalEditStudent = (props) => {
     const {show, handleClose, dataStudentEdited} = props;
     const [id, setId] = useState('');
     const [studentId, setStudentId] = useState('');
@@ -92,4 +92,4 @@ const ModalEdit = (props) => {
 
 }
 
-export default ModalEdit;
+export default ModalEditStudent;
