@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 import { useNavigate, useParams } from 'react-router';
 
 import {fetchAllCourses} from '../../services/CourseService';
-import {getStudentsFromCourse} from '../../services/Student-CourseService';
 import ModalAddNewCourse from './ModalAddNewCourse';
-// import ModalEditStudent from './ModalEditStudent';
+import ModalEditCourse from './ModalEditCourse';
 import ModalDeleteCourse from './ModalDeleteCourse';
-import TableStudentsInCourse from '../student-course/TableStudentsInCourse';
 
 const TableCourses = () => {
     const [listCourses, setListCourses] = useState([]);
@@ -16,31 +14,32 @@ const TableCourses = () => {
 
     const [isShowModalAddNewCourse, setIsShowModalAddNewCourse] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-    // const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-    // const [dataStudentEdited, setDataStudentEdited] = useState({});
+    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+    const [dataCourseEdited, setDataCourseEdited] = useState({});
     const [id, setId] = useState('');
 
     const { courseId } = useParams();
    
     const navigate = useNavigate();
+
     useEffect(() => {
         getCourses()
-    }, [])
+    }, [listCourses])
 
-    const getCourses = async () => {
+    const getCourses = useCallback (async () => {
         let res = await fetchAllCourses();
         if(res.data) {
             setListCourses(res.data);
         }
-    }
+    })
 
     const handlePageClick = (event) => {
         getCourses(+event.selected + 1)
     };
 
     const handleEdit = (course) => {
-        // setDataStudentEdited(student);
-        // setIsShowModalEdit(true);
+        setDataCourseEdited(course);
+        setIsShowModalEdit(true);
         
     }   
     
@@ -50,16 +49,11 @@ const TableCourses = () => {
     }
 
     const handleClose = () => {
-        // setIsShowModalEdit(false);
+        setIsShowModalEdit(false);
         setIsShowModalAddNewCourse(false);
         setIsShowModalDelete(false);
     }
 
-    const getStudents = (courseId) => {
-        // let res = await getStudentsFromCourse(courseId);
-        navigate(`/course/${courseId}`)
-        // console.log(res);
-    }
     
 
     return (
@@ -72,27 +66,28 @@ const TableCourses = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
+                    <th>ID</th>
                     <th>Course ID</th>
                     <th>Course name</th>
                     <th>Teacher</th>
                     <th>Time</th>
-                    {/* <th>Actions</th> */}
+                    <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {listCourses && listCourses.length > 0 && 
                         listCourses.map((item, index) => {
                             return (
-                                <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => navigate(`/course/${item.id}`)}>
-                                {/* <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => getStudents(item.id)}> */}
-                                    <td>{item.courseId}</td>
-                                    <td>{item.courseName}</td>
-                                    <td>{item.teacherName}</td>
-                                    <td>{item.time}</td>
-                                    {/* <td>
-                                        <button className='btn btn-warning' onClick={() => handleEdit(item)}>Edit</button>
-                                        <button className='btn btn-danger mx-4' onClick={() => handleDelete(item.id)}>Delete</button>
-                                    </td> */}
+                                <tr key={`course-${index}`} style={{cursor: 'pointer'}} >
+                                    <td onClick={() => navigate(`/course/${item.id}`)}>{item.id}</td>
+                                    <td onClick={() => navigate(`/course/${item.id}`)}>{item.courseId}</td>
+                                    <td onClick={() => navigate(`/course/${item.id}`)}>{item.courseName}</td>
+                                    <td onClick={() => navigate(`/course/${item.id}`)}>{item.teacherName}</td>
+                                    <td onClick={() => navigate(`/course/${item.id}`)}>{item.time}</td>
+                                    <td style={{cursor: 'default'}}>
+                                        <button className='btn btn-warning z-5'  onClick={() => handleEdit(item)}>Edit</button>
+                                        <button className='btn btn-danger mx-4 z-5' onClick={() => handleDelete(item.id)}>Delete</button>
+                                    </td>
                                 </tr>
                             )
                         })
@@ -124,12 +119,12 @@ const TableCourses = () => {
                 show={isShowModalAddNewCourse}
                 handleClose={handleClose}
             />
-            {/* <ModalEdit
+            <ModalEditCourse
                 show={isShowModalEdit}
                 handleClose={handleClose}
-                dataStudentEdited={dataStudentEdited}
+                dataCourseEdited={dataCourseEdited}
                 handleEdit = {handleEdit}
-            /> */}
+            />
             <ModalDeleteCourse
                 show={isShowModalDelete}
                 handleClose={handleClose}

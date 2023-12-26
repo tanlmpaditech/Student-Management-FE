@@ -30,7 +30,7 @@ const Login = () => {
                 token: res.data.adminData.token
             }
             sessionStorage.setItem('account', JSON.stringify(data))
-            navigate('/')
+            navigate('/students');
             window.location.reload();
         } else {
             toast.error('Username or password is incorrect');

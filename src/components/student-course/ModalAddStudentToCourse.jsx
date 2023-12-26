@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ const ModalAddStudentToCourse = (props) => {
     const { courseId } = useParams();
     const handleSaveNewStudentToCourse = async () => {
         let res = await addStudentToCourse(courseId, studentId);
-        console.log(res.data);
+        // console.log(res.data);
         if(res.data) {
             handleClose();
             setStudentId('');
@@ -22,6 +22,7 @@ const ModalAddStudentToCourse = (props) => {
             toast.error('Failed to add student');
         }
     }
+    
     return (
         <div>
             <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>

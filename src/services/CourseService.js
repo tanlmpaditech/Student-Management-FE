@@ -10,10 +10,14 @@ const postCreateCourse = async (courseId, courseName, teacherName, time) => {
     return await axios.post('/create-course', {courseId, courseName, teacherName, time})
 }
 
+const putUpdateCourse = async (id, courseId, courseName, teacherName, time) => {
+    return await axios.put('/edit-course', {id, courseId, courseName, teacherName, time});
+}
+
 const deleteCourse = async (id) => {
     // console.log(id)
     return await axios.delete('/delete-course', { data: { id } });
 }
 
 // const 
-export { fetchAllCourses, postCreateCourse, deleteCourse };
+export { fetchAllCourses, postCreateCourse, deleteCourse, putUpdateCourse };

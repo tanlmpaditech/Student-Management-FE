@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 
@@ -19,14 +19,14 @@ const TableStudentsInCourse = () => {
 
     useEffect(() => {
         getStudents()
-    }, [])
+    }, [listStudents])
 
-    const getStudents = async () => {
+    const getStudents = useCallback (async () => {
         let res = await getStudentsFromCourse(courseId);
         if(res.data) {
             setListStudents(res.data);
         }
-    }
+    })
 
     const handlePageClick = (event) => {
         getStudents(+event.selected + 1)

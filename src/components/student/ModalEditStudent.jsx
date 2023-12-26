@@ -47,7 +47,6 @@ const ModalEditStudent = (props) => {
                 <Modal.Body>
                     <div>
                         <form>
-                        
                             <div className="form-group">
                                 <label className='studentId'>Student ID</label>
                                 <input type="text" className="form-control" value={studentId} onChange={(e) => setStudentId(e.target.value)}/>

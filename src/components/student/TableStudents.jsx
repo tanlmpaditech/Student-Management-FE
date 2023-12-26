@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 
@@ -7,6 +7,7 @@ import {fetchAllStudents} from '../../services/StudentService';
 import ModalAddNewStudent from './ModalAddNewStudent';
 import ModalEditStudent from './ModalEditStudent';
 import ModalDeleteStudent from './ModalDeleteStudent';
+// import { List } from 'antd';
 
 const TableStudents = () => {
     const [listStudents, setListStudents] = useState([]);
@@ -17,21 +18,18 @@ const TableStudents = () => {
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
     const [dataStudentEdited, setDataStudentEdited] = useState({});
     const [id, setId] = useState('');
-   
 
     useEffect(() => {
         getStudents()
-    }, [])
+    }, [listStudents])
 
-    const getStudents = async () => {
+    const getStudents = useCallback (async () => {
         let res = await fetchAllStudents();
-        if(res.data) {
-            setListStudents(res.data);
-        }
-    }
+        setListStudents(res.data);
+    })
 
     const handlePageClick = (event) => {
-        getStudents(+event.selected + 1)
+        // getStudents(+event.selected + 1)
     };
 
     const handleEdit = (student) => {

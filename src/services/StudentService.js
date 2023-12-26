@@ -1,8 +1,8 @@
 import axios from "./customize-axios";
 
 const fetchAllStudents = async () => {
-    const data =  await axios.get('/students');
-    return data;
+    return await axios.get('/students');
+    
 }   
 
 const postCreateStudent = async (studentId, fullName, email, address, phoneNumber, gender) => {
