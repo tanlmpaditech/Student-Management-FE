@@ -3,28 +3,26 @@ import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 
-import {fetchAllStudents} from '../../services/StudentService';
-import ModalAddNewStudent from './ModalAddNewStudent';
-import ModalEditStudent from './ModalEditStudent';
-import ModalDeleteStudent from './ModalDeleteStudent';
+import ModalAddStudentToCourse from './ModalAddStudentToCourse';
+import ModalDeleteStudentFromCourse from './ModalDeleteStudentFromCourse';
+import { getStudentsFromCourse } from '../../services/Student-CourseService';
+import { useParams } from 'react-router-dom';
 
-const TableStudents = () => {
+const TableStudentsInCourse = () => {
     const [listStudents, setListStudents] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
     const [isShowModalAddNewStudents, setIsShowModalAddNewStudents] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-    const [dataStudentEdited, setDataStudentEdited] = useState({});
     const [id, setId] = useState('');
-   
+    let { courseId } = useParams();
 
     useEffect(() => {
         getStudents()
     }, [])
 
     const getStudents = async () => {
-        let res = await fetchAllStudents();
+        let res = await getStudentsFromCourse(courseId);
         if(res.data) {
             setListStudents(res.data);
         }
@@ -33,26 +31,20 @@ const TableStudents = () => {
     const handlePageClick = (event) => {
         getStudents(+event.selected + 1)
     };
-
-    const handleEdit = (student) => {
-        setDataStudentEdited(student);
-        setIsShowModalEdit(true);
-    }   
     
     const handleDelete = (_id) => {
         setIsShowModalDelete(true);
         setId(_id);
+        console.log(_id);
     }
 
     const handleClose = () => {
-        setIsShowModalEdit(false);
         setIsShowModalAddNewStudents(false);
         setIsShowModalDelete(false);
     }
     
 
     return (
-        
         <div>
             <div className='my-3' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <span><b>List Students: </b></span>
@@ -84,14 +76,12 @@ const TableStudents = () => {
                                     <td>{item.phoneNumber}</td>
                                     <td>{item.gender}</td>
                                     <td>
-                                        <button className='btn btn-warning' onClick={() => handleEdit(item)}>Edit</button>
                                         <button className='btn btn-danger mx-4' onClick={() => handleDelete(item.id)}>Delete</button>
                                     </td>
                                 </tr>
                             )
                         })
                     }
-                    
                 </tbody>
             </Table>
             <ReactPaginate
@@ -114,17 +104,11 @@ const TableStudents = () => {
                 activeClassName="active"
                 renderOnZeroPageCount={null}
             />
-            <ModalAddNewStudent
+            <ModalAddStudentToCourse
                 show={isShowModalAddNewStudents}
                 handleClose={handleClose}
             />
-            <ModalEditStudent
-                show={isShowModalEdit}
-                handleClose={handleClose}
-                dataStudentEdited={dataStudentEdited}
-                handleEdit = {handleEdit}
-            />
-            <ModalDeleteStudent
+            <ModalDeleteStudentFromCourse
                 show={isShowModalDelete}
                 handleClose={handleClose}
                 id={id}
@@ -133,4 +117,4 @@ const TableStudents = () => {
     );
 }
 
-export default TableStudents;
+export default TableStudentsInCourse;

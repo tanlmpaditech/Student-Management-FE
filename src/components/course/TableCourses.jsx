@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import {fetchAllCourses} from '../../services/CourseService';
+import {getStudentsFromCourse} from '../../services/Student-CourseService';
 import ModalAddNewCourse from './ModalAddNewCourse';
 // import ModalEditStudent from './ModalEditStudent';
 import ModalDeleteCourse from './ModalDeleteCourse';
+import TableStudentsInCourse from '../student-course/TableStudentsInCourse';
 
 const TableCourses = () => {
     const [listCourses, setListCourses] = useState([]);
@@ -14,9 +16,11 @@ const TableCourses = () => {
 
     const [isShowModalAddNewCourse, setIsShowModalAddNewCourse] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-    const [dataStudentEdited, setDataStudentEdited] = useState({});
+    // const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+    // const [dataStudentEdited, setDataStudentEdited] = useState({});
     const [id, setId] = useState('');
+
+    const { courseId } = useParams();
    
     const navigate = useNavigate();
     useEffect(() => {
@@ -51,8 +55,10 @@ const TableCourses = () => {
         setIsShowModalDelete(false);
     }
 
-    const addStudentToCourse = (courseId) => {
+    const getStudents = (courseId) => {
+        // let res = await getStudentsFromCourse(courseId);
         navigate(`/course/${courseId}`)
+        // console.log(res);
     }
     
 
@@ -77,7 +83,8 @@ const TableCourses = () => {
                     {listCourses && listCourses.length > 0 && 
                         listCourses.map((item, index) => {
                             return (
-                                <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => addStudentToCourse(item.courseId)}>
+                                <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => navigate(`/course/${item.id}`)}>
+                                {/* <tr key={`course-${index}`} style={{cursor: 'pointer'}} onClick={() => getStudents(item.id)}> */}
                                     <td>{item.courseId}</td>
                                     <td>{item.courseName}</td>
                                     <td>{item.teacherName}</td>

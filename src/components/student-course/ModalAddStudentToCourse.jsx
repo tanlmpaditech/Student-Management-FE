@@ -1,77 +1,56 @@
-// import Button from 'react-bootstrap/Button';
-// import { useState } from 'react';
-// import Modal from 'react-bootstrap/Modal';
-// import { toast } from 'react-toastify';
+import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
-// import { postCreateCourse } from '../../services/CourseService';
+import { addStudentToCourse } from '../../services/Student-CourseService';
 
-// const ModalAddStudentToCourse = (props) => {
-//     const { show, handleClose } = props;
-//     const [studentId, setStudentId] = useState('');
-//     // const [courseName, setCourseName] = useState('');
-//     // const [time, setTime] = useState('');
-//     // const [teacherName, setTeacherName] = useState('');
-    
+const ModalAddStudentToCourse = (props) => {
+    const { show, handleClose } = props;
+    const [studentId, setStudentId] = useState('');
 
-//     // const handleUpdateTable = (student) => {
-//     //     setListStudents([student, ...listStudents]);
-//     // }
-
-//     const handleSaveNewStudentToCourse = async () => {
-//         let res = await postStudentToCourse(courseId, courseName, teacherName, time);
-//         console.log(res.data);
-//         if(res.data) {
-//             handleClose();
-//             setCourseId('');
-//             setCourseName('');
-//             setTime('');
-//             // setPhoneNumber('');
-//             toast.success('Create a new student successful');
-//         } else {
-//             toast.error('Failed to create student');
-//         }
-//     }
-//     return (
-//         <div>
-//             <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
-//                 <Modal.Header closeButton>
-//                 <Modal.Title>Add new student</Modal.Title>
-//                 </Modal.Header>
-//                 <Modal.Body>
-//                     <div>
-//                         <form>
-//                             <div className="form-group">
-//                                 <label className='courseId'>Course ID</label>
-//                                 <input type="text" className="form-control" value={courseId} onChange={(e) => setCourseId(e.target.value)}/>
-//                             </div>
-//                             <div className="form-group">
-//                                 <label className='courseName'>Course Name</label>
-//                                 <input type="text" className="form-control" value={courseName} onChange={(e) => setCourseName(e.target.value)}/>
-//                             </div>
-//                             <div className="form-group">
-//                                 <label className='teacherName'>Teacher</label>
-//                                 <input type="text" className="form-control" value={teacherName} onChange={(e) => setTeacherName(e.target.value)}/>
-//                             </div>
-//                             <div className="form-group">
-//                                 <label className='time'>Time</label>
-//                                 <input type="text" className="form-control" value={time} onChange={(e) => setTime(e.target.value)}/>
-//                             </div>
+    const { courseId } = useParams();
+    const handleSaveNewStudentToCourse = async () => {
+        let res = await addStudentToCourse(courseId, studentId);
+        console.log(res.data);
+        if(res.data) {
+            handleClose();
+            setStudentId('');
+            toast.success('Add a student to course successfully');
+        } else {
+            toast.error('Failed to add student');
+        }
+    }
+    return (
+        <div>
+            <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
+                <Modal.Header closeButton>
+                <Modal.Title>Add new student</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
+                        <form>
+                            <div className="form-group">
+                                <label className='studentId'>ID</label>
+                                <input type="text" className="form-control" value={studentId} onChange={(e) => setStudentId(e.target.value)}/>
+                            </div>
                             
-//                         </form>
-//                     </div>
-//                 </Modal.Body>
-//                 <Modal.Footer>
-//                 <Button variant="secondary" onClick={handleClose}>
-//                     Close
-//                 </Button>
-//                 <Button variant="primary" onClick={() => handleSaveNewCourse()}>
-//                     Save
-//                 </Button>
-//                 </Modal.Footer>
-//             </Modal>
-//         </div>
-//     )
+                        </form>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={() => handleSaveNewStudentToCourse()}>
+                    Save
+                </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
 
-// }
+}
 
-// export default ModalAddStudentToCourse;
+export default ModalAddStudentToCourse;

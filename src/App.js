@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { useNavigate } from 'react-router';
 
 import Header from './components/Header';
-import AppRoutes from './routes/AppRoute';
+import AppRoutes from './routes/AppRoutes';
 import './App.scss';
 
 
@@ -15,10 +15,8 @@ function App() {
   const [account, setAccount] = useState({});
     useEffect(() => {
         let session = sessionStorage.getItem('account');
-        // console.log(JSON.parse(session));
         if(session) {
           setAccount(JSON.parse(session));
-          navigate('/')
         } else {
           navigate("/login");
         }
@@ -27,10 +25,9 @@ function App() {
   return (
     <div className='app-container'>
       <Container>
-      {account && !_.isEmpty(account) && account.isAuthenticated && <Header/>}
+          {account && !_.isEmpty(account) && account.isAuthenticated && <Header/>}
           <AppRoutes />
       </Container>
-      
       <ToastContainer />
     </div>
   );

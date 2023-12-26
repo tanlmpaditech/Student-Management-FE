@@ -5,9 +5,9 @@ const PrivateRoute = (props) => {
     
     return (
         <>
-            <Routes>
+            {/* <Routes>
                 <Route path={props.path} element={props.children}/>
-            </Routes>
+            </Routes> */}
         </>
     )
 }
