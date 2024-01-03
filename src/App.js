@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import Header from './components/Header';
 import AppRoutes from './routes/AppRoutes';
 import './App.scss';
+// import { useSelector } from 'react-redux';
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
           navigate("/login");
         }
     }, []);
+
+  // const dataAdminRedux = useSelector(state => state.admin.account)
+  // console.log(dataAdminRedux);
 
   return (
     <div className='app-container'>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnglesLeft, faEyeSlash, faEye, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { faEyeSlash, faEye, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 import { login } from '../services/AdminService';
 import { toast } from 'react-toastify';
@@ -38,14 +38,16 @@ const Login = () => {
         setShowSpinner(false);
     }
 
+
+
     return(
         <>
             <div className='login-container col-12 col-sm-4'>
                 <div className='title'>Log in</div>
                 <div className='text'>Email</div>
                 <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <div className='input-email'>
-                    <input type={showPassword ? 'password' : 'text'} placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                <div className='input-password'>
+                    <input type={showPassword ? 'password' : 'text'} placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {if(e.code === "Enter") handleLogin()}}/>
                     <FontAwesomeIcon className="hidePassword" icon={showPassword ? faEyeSlash : faEye} onClick={() => setShowPassword(!showPassword)}/>
 
                 </div>
@@ -53,10 +55,6 @@ const Login = () => {
                     {showSpinner && < FontAwesomeIcon icon={faSpinner} className='mx-1 spinner'/>}
                     Login
                 </button>
-                {/* <NavLink className='back' to='/'>
-                    <FontAwesomeIcon icon={faAnglesLeft} />
-                    Go back
-                </NavLink> */}
             </div>
         </>
     )

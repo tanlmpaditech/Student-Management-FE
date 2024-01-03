@@ -19,7 +19,7 @@ const TableStudentsInCourse = () => {
 
     useEffect(() => {
         getStudents()
-    }, [listStudents])
+    }, [])
 
     const getStudents = useCallback (async () => {
         let res = await getStudentsFromCourse(courseId);

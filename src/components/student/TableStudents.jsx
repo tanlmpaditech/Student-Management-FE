@@ -21,7 +21,7 @@ const TableStudents = () => {
 
     useEffect(() => {
         getStudents()
-    }, [listStudents])
+    }, [])
 
     const getStudents = useCallback (async () => {
         let res = await fetchAllStudents();
@@ -29,7 +29,7 @@ const TableStudents = () => {
     })
 
     const handlePageClick = (event) => {
-        // getStudents(+event.selected + 1)
+        getStudents(+event.selected + 1)
     };
 
     const handleEdit = (student) => {

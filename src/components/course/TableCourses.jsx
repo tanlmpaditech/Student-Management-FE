@@ -24,7 +24,7 @@ const TableCourses = () => {
 
     useEffect(() => {
         getCourses()
-    }, [listCourses])
+    }, [])
 
     const getCourses = useCallback (async () => {
         let res = await fetchAllCourses();
@@ -53,8 +53,6 @@ const TableCourses = () => {
         setIsShowModalAddNewCourse(false);
         setIsShowModalDelete(false);
     }
-
-    
 
     return (
         
