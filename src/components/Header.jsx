@@ -29,6 +29,7 @@ const Header = () => {
                         <NavLink className="nav-link" to='/'>Home</NavLink>
                         <NavLink className="nav-link" to='/students'>Manage students</NavLink>
                         <NavLink className="nav-link" to='/courses'>Courses</NavLink>
+                        <NavLink className="nav-link" to='/register-course'>Register course</NavLink>
                     </Nav>
                     <Nav>
                         {/* <NavDropdown title="Settings" id="basic-nav-dropdown">

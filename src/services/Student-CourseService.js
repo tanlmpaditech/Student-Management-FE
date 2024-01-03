@@ -12,4 +12,8 @@ const deleteStudentFromCourse = async (courseId, studentId) => {
     return await axios.delete(`/delete-student-from-course/${courseId}`, { data: {courseId, studentId} });
 }
 
-export { getStudentsFromCourse, addStudentToCourse, deleteStudentFromCourse };
+const registerCourse = async (courseId, studentId) => {
+    return await axios.post('/register-course', {courseId, studentId});
+}
+
+export { getStudentsFromCourse, addStudentToCourse, deleteStudentFromCourse, registerCourse };
